@@ -23,9 +23,14 @@ import { bip32PathToBytes } from "./utils";
 // 255B + CLA + INS + P1 + P2 + Lc
 const CHUNK_SIZE = 255;
 const CLA = 0x80;
+
+const INS_SIGN = 2;
 const INS_GET_PUBLIC_KEY = 4;
 const INS_GET_ADDRESS = 5;
-const INS_SIGN = 2;
+const INS_GET_VERSION = 6;
+const INS_SIGN_NEP413_MESSAGE = 7;
+const INS_SIGN_NEP366_DELEGATE_ACTION = 8;
+
 const P1_LAST_CHUNK = 0x80;
 const NETWORK_ID = "W".charCodeAt(0);
 
@@ -91,7 +96,7 @@ export default class Near {
   }
 }
 
-async function createClient(transport) {
+async function createClient(transport: Transport) {
   return {
     transport,
     async getPublicKey(path, verify) {
